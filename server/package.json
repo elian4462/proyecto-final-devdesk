@@ -1,0 +1,13 @@
+{
+  "name": "devdesk-backend",
+  "version": "1.0.0",
+  "description": "Backend HTTP REST y Proxy de Asistente IA para DevDesk",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test-e2e.js"
+  },
+  "keywords": ["devdesk", "flutter", "rest", "backend"],
+  "author": "Elian",
+  "license": "MIT"
+}
