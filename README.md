@@ -1,6 +1,6 @@
 # DevDesk — Sistema de Soporte TI y Monitoreo de Infraestructura
 
-> Proyecto Final del curso *Desarrolla Aplicaciones Móviles Robustas con Flutter e IA*.
+> Proyecto Final.
 
 **DevDesk** es una solución móvil integral orientada al área de Tecnologías de la Información y Comunicación (TIC). Permite a los equipos de infraestructura y soporte técnico supervisar en tiempo real un catálogo de activos tecnológicos (servidores cloud, clusters de bases de datos, switches core, firewalls y gateways VPN), gestionar incidencias técnicas mediante un CRUD completo de tickets de soporte y diagnosticar fallas con la asistencia de un copiloto de inteligencia artificial (DevDesk AI) mediante un backend intermedio seguro.
 
@@ -22,14 +22,14 @@
 ## Cómo ejecutar el proyecto
 
 ### Requisitos previos
-- **Flutter SDK**: versión 3.5.0 o superior ([Guía de instalación](https://docs.flutter.dev/get-started/install)).
+- **Flutter SDK**: versión 3.5.0 o superior
 - **Node.js**: versión 18 o superior para el servidor backend.
 
 ---
 
-### 1. Levantar el Backend Propio
+### 1. Levantar el Backend
 
-El backend de DevDesk es completamente autónomo y no requiere dependencias externas complejas.
+El backend de DevDesk es completamente autónomo y no requiere dependencias externas.
 
 ```bash
 # 1. Entrar a la carpeta del servidor
@@ -41,7 +41,6 @@ node server.js
 
 El servidor iniciará escuchando en `http://localhost:3000`.
 
-*(Opcional) Puedes verificar todos los endpoints de autenticación, activos, tickets e IA ejecutando en otra terminal:*
 ```bash
 node server/test-e2e.js
 ```
@@ -93,7 +92,7 @@ Para acceder de inmediato al sistema y probar las funcionalidades protegidas:
 | **Administrador TI** | `admin@empresa.com` | `admin-1234` |
 | **Técnico de Soporte** | `tecnico@empresa.com` | `tecnico-1234` |
 
-*También puedes registrar un nuevo usuario desde la pantalla de Registro de la aplicación.*
+*También se puede registrar un nuevo usuario desde la pantalla de Registro de la aplicación.*
 
 ---
 
@@ -133,16 +132,6 @@ Cuando el usuario crea o consulta un ticket de soporte:
 4. Si la red responde favorablemente, los datos se almacenan en la caja de caché local de Hive (`tickets_cache_box`) y se actualiza la interfaz reactivamente con `Obx`.
 5. Si el servidor se apaga o la conexión falla, el repositorio recupera inmediatamente los datos guardados en Hive y el controlador activa el `MaterialBanner` offline para informar al técnico.
 
----
-
-## Decisión Técnica Propia
-
-1. **Dominio TIC orientado a Infraestructura**: Se descartaron temas genéricos en favor de un sistema de soporte y diagnóstico de infraestructura de redes y servidores. Esto permitió integrar telemetría de recursos (CPU, RAM), estados operativos diferenciados y criticidad técnica.
-2. **Servidor Node.js Nativo**: Se eligió un backend ligero implementado con la API estándar de Node.js (`http`, `crypto`, `fs`). Esto garantiza que el evaluador no requiera instalar dependencias pesadas de bases de datos ni sufra errores de compilación de paquetes nativos.
-3. **Flujo de Asistencia con IA Ética y Human-in-the-Loop**: La IA no crea tickets unilateralmente en la base de datos sin autorización; sugiere diagnósticos basados en los síntomas y presenta una propuesta modal para que el técnico confirme o descarte la acción antes de persistirla.
-
----
-
 ## Tecnologías y Paquetes Principales
 
 | Paquete | Versión | Propósito en el Proyecto |
@@ -153,16 +142,10 @@ Cuando el usuario crea o consulta un ticket de soporte:
 | **hive** / **hive_flutter** | `^2.2.3` | Base de datos NoSQL local ultrarrápida para favoritos y caché offline |
 | **path_provider** | `^2.1.4` | Acceso a directorios locales del dispositivo para la base de datos Hive |
 
----
-
 ## Seguridad
 
-- **Cero secretos en el repositorio**: No existen claves de API ni credenciales hardcodeadas en el código fuente.
 - **Tokens seguros**: Los tokens de sesión nunca se imprimen en consola y se almacenan en el Keychain (iOS) / Keystore (Android) a través de `flutter_secure_storage`.
 - **Sanitización de registros**: `ReporteErrores.limpiar()` elimina expresiones con formato `Bearer ...` y tokens JWT antes de cualquier registro de log.
-- **Variables de entorno**: El archivo `.env` está expresamente excluido en `.gitignore`. Se proporciona `.env.example` como plantilla.
-
----
 
 ## Licencia
 
